@@ -11,6 +11,7 @@ export class AppComponent {
   constructor(private shortUrlService: ShortUrlService) {}
   title = 'ShortUrl';
   url: string | undefined;
+  mensaje: string | undefined;
 
   acortarLink() {
     console.log(this.url);
@@ -18,5 +19,8 @@ export class AppComponent {
     if (this.url != undefined) {
       this.shortUrlService.acortar(this.url);
     }
+
+    //si resulto
+    this.mensaje = 'url lista';
   }
 }
