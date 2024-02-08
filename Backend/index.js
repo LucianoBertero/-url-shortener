@@ -4,12 +4,13 @@ const {dbconection}=require('./connect')
 const URL=require('./models/url')
 const app = express();
 const PORT = 8001;
-
+const cors = require('cors');
 dbconection();
 app.use(express.json());
 app.use('/url',urlRoute)
 
-
+// Habilitar CORS
+app.use(cors());
 
 app.get("/:shortId", async (req, res) => {
     const shortId = req.params.shortId;
@@ -25,3 +26,8 @@ app.get("/:shortId", async (req, res) => {
 
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+
+
+
+
+
