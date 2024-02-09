@@ -17,8 +17,8 @@ export class AppComponent {
   mensaje: string | undefined;
 
   acortarLink() {
-    this.verificarExistenciaPagina(this.url || '');
-    return;
+    // this.verificarExistenciaPagina(this.url || '');
+    // return;
     if (this.url != undefined) {
       this.http
         .post('https://backendkkk.fly.dev/url', { url: this.url })
