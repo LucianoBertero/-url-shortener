@@ -7,7 +7,9 @@
     <button class="button" (click)="acortarLink()">Acortar</button>
   </div>
   <div class="result">
-    <p>{{mensaje}}</p>
+    <p #mensajeElement (click)="copiarMensaje(mensajeElement.innerText)">{{mensaje}}</p>
+    <div *ngIf="mensajeCopiado" class="mensaje-copiado">Mensaje copiado</div>
   </div>
- 
+  
+  
 </div>

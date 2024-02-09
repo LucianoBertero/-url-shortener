@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ShortUrlService } from './services/short-url.service';
 import { HttpClient } from '@angular/common/http';
@@ -17,16 +17,16 @@ export class AppComponent {
   mensaje: string | undefined;
 
   acortarLink() {
-    console.log(this.url);
-
+    this.verificarExistenciaPagina(this.url || '');
+    return;
     if (this.url != undefined) {
       this.http
         .post('https://backendkkk.fly.dev/url', { url: this.url })
         .subscribe(
-          (response) => {
+          (response: any) => {
             console.log('respondio');
             console.log('Respuesta del backend:', response);
-            this.mensaje = `https://backendkkk.fly.dev/url/${this.url}`;
+            this.mensaje = `https://backendkkk.fly.dev/${response.id}`;
             // Puedes mostrar un mensaje de éxito al usuario o realizar otras acciones según la respuesta
           },
           (error) => {
@@ -39,5 +39,32 @@ export class AppComponent {
     }
 
     //si resulto
+  }
+  mensajeCopiado: boolean = false;
+
+  copiarMensaje(mensaje: string) {
+    const el = document.createElement('textarea');
+    el.value = mensaje;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    this.mensajeCopiado = true;
+
+    // Reiniciar el mensaje después de 3 segundos
+    setTimeout(() => {
+      this.mensajeCopiado = false;
+    }, 1500);
+  }
+
+  verificarExistenciaPagina(url: string): Promise<boolean> {
+    return this.http
+      .head(url)
+      .toPromise()
+      .then((response) => {
+        console.log('si existe');
+        return true;
+      })
+      .catch((error) => false);
   }
 }

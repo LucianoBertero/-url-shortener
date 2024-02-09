@@ -155,3 +155,19 @@
         font-size: 0.6rem;
       }
   }
+
+
+  .result p {
+    cursor: pointer;
+  }
+  .mensaje-copiado {
+    position: absolute;
+    bottom: 6;
+    right: 0;
+    background-color: rgba(232, 50, 238, 0.8);
+    color: rgba(255, 255, 255, 0.541);
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 9999;
+  }
+  
