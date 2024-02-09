@@ -10,7 +10,7 @@ export class ShortUrlService {
   acortar(url: string) {
     console.log('entro');
     this.http
-      .post('https://shorter-url-m9v4.onrender.com/url', { url: url })
+      .post('https://short-url-backend.fly.dev/', { url: url })
       .subscribe(
         (response) => {
           console.log('respondio');
