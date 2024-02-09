@@ -9,7 +9,7 @@ export class ShortUrlService {
 
   acortar(url: string) {
     console.log('entro');
-    this.http.post('https://backendkkk.fly.dev/', { url: url }).subscribe(
+    this.http.post('https://backendkkk.fly.dev/url', { url: url }).subscribe(
       (response) => {
         console.log('respondio');
         console.log('Respuesta del backend:', response);
