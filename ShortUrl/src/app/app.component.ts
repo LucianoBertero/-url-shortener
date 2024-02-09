@@ -19,9 +19,18 @@ export class AppComponent {
   acortarLink() {
     // this.verificarExistenciaPagina(this.url || '');
     // return;
-    if (this.url != undefined) {
+    if (this.url != undefined || this.url === '') {
+      if (this.url && /\.com$/.test(this.url)) {
+        // La URL es válida y tiene la terminación ".com"
+      } else {
+        this.mensaje = 'URL no válida';
+        return;
+      }
+      const urlConProtocolo = this.corregirURL(this.url);
+      console.log(urlConProtocolo);
+
       this.http
-        .post('https://backendkkk.fly.dev/url', { url: this.url })
+        .post('https://backendkkk.fly.dev/url', { url: urlConProtocolo })
         .subscribe(
           (response: any) => {
             console.log('respondio');
@@ -30,10 +39,14 @@ export class AppComponent {
             // Puedes mostrar un mensaje de éxito al usuario o realizar otras acciones según la respuesta
           },
           (error) => {
-            // Manejar cualquier error de la solicitud
-            console.error('Error al enviar la solicitud:', error);
-            console.log('Norespondio');
-            // Puedes mostrar un mensaje de error al usuario o realizar otras acciones
+            if (
+              error.status === 400 &&
+              error.error.error === 'La URL no es válida'
+            ) {
+              this.mensaje = 'URL no válida';
+            } else {
+              this.mensaje = 'Error al procesar la solicitud';
+            }
           }
         );
     }
@@ -66,5 +79,18 @@ export class AppComponent {
         return true;
       })
       .catch((error) => false);
+  }
+
+  corregirURL(url: string): string {
+    // Verificar si la URL comienza con "www."
+    if (url.startsWith('www.')) {
+      // Agregar el protocolo "https://" al principio de la URL
+      return 'https://' + url;
+    } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      // Si la URL no comienza con "http://" ni "https://", agregar "https://" al principio
+      return 'https://www.' + url;
+    }
+    // Si la URL ya tiene el protocolo, devolver la misma URL sin cambios
+    return url;
   }
 }
