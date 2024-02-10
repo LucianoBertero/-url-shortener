@@ -20,12 +20,6 @@ export class AppComponent {
     // this.verificarExistenciaPagina(this.url || '');
     // return;
     if (this.url != undefined || this.url === '') {
-      if (this.url && /\.com$/.test(this.url)) {
-        // La URL es válida y tiene la terminación ".com"
-      } else {
-        this.mensaje = 'URL no válida';
-        return;
-      }
       const urlConProtocolo = this.corregirURL(this.url);
       console.log(urlConProtocolo);
 
